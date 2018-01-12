@@ -43,6 +43,7 @@ public class PersonnelOptions extends PilotOptions {
     public static final String EDGE_REPAIR_BREAK_PART = "edge_when_repair_break_part";
     public static final String EDGE_REPAIR_FAILED_REFIT = "edge_when_fail_refit_check";
     public static final String EDGE_ADMIN_ACQUIRE_FAIL = "edge_when_admin_acquire_fail";
+    public static final String SPA_CLAN_TECH_SPEC = "Clan Technical Knowledge (Unofficial)";
     
     @Override
     public void initialize() {
@@ -66,11 +67,30 @@ public class PersonnelOptions extends PilotOptions {
             addOption(edge, OptionsConstants.EDGE, 0);
         }
         
+        //SPAs
+        IBasicOptionGroup spa = null;
+        for (Enumeration<IBasicOptionGroup> e = getOptionsInfoImp().getGroups(); e.hasMoreElements(); ) {
+            final IBasicOptionGroup group = e.nextElement();
+            if (group.getKey().equals(PilotOptions.LVL3_ADVANTAGES)) {
+                spa = group;
+                break;
+            }
+        }
+        
+        if (null == spa) {
+            // This really shouldn't happen.
+            MekHQ.getLogger().log(PersonnelOptions.class, METHOD_NAME,
+                    LogLevel.WARNING, "Could not find spa group"); //$NON-NLS-1$
+            spa = addGroup("spa", PilotOptions.LVL3_ADVANTAGES); // $NON-NLS-1$
+        }
+        
+        
         // Add MekHQ-specific options
         addOption(edge, EDGE_MEDICAL, false);
         addOption(edge, EDGE_REPAIR_BREAK_PART, false);
         addOption(edge, EDGE_REPAIR_FAILED_REFIT, false);
         addOption(edge, EDGE_ADMIN_ACQUIRE_FAIL, false);
+        addOption(spa, SPA_CLAN_TECH_SPEC, false);
     }
 
     /* 
