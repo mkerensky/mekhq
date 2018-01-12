@@ -108,6 +108,7 @@ public class PersonnelTableMouseAdapter extends MouseInputAdapter implements
     private static final String CMD_ACQUIRE_WEAPON_SPECIALIST = "WSPECIALIST"; //$NON-NLS-1$
     private static final String CMD_ACQUIRE_RANGEMASTER = "RANGEMASTER"; //$NON-NLS-1$
     private static final String CMD_ACQUIRE_HUMANTRO = "HUMANTRO"; //$NON-NLS-1$
+    private static final String CMD_ACQUIRE_CLAN_TECH_SPEC = "CLANTECHSPEC"; //$NON-NLS-1$
     private static final String CMD_ACQUIRE_ABILITY = "ABILITY"; //$NON-NLS-1$
     private static final String CMD_IMPROVE = "IMPROVE"; //$NON-NLS-1$
     private static final String CMD_ADD_SPOUSE = "SPOUSE"; //$NON-NLS-1$
@@ -591,6 +592,17 @@ public class PersonnelTableMouseAdapter extends MouseInputAdapter implements
                 selectedPerson.setXp(selectedPerson.getXp() - cost);
                 MekHQ.triggerEvent(new PersonChangedEvent(selectedPerson));
                 // TODO: add personnelTab.getCampaign() report
+                break;
+            }
+            case CMD_ACQUIRE_CLAN_TECH_SPEC:
+            {
+                String selected = data[1];
+                int cost = Integer.parseInt(data[2]);
+                selectedPerson.acquireAbility(PersonnelOptions.SPA_CLAN_TECH_SPEC,
+                        selected, true);
+                gui.getCampaign().personUpdated(selectedPerson);
+                selectedPerson.setXp(selectedPerson.getXp() - cost);
+                MekHQ.triggerEvent(new PersonChangedEvent(selectedPerson));
                 break;
             }
             case CMD_ACQUIRE_WEAPON_SPECIALIST:
@@ -1872,6 +1884,12 @@ public class PersonnelTableMouseAdapter extends MouseInputAdapter implements
                             menuItem.setEnabled(available);
                             specialistMenu.add(menuItem);
                             abMenu.add(specialistMenu);
+                        } else if (spa.getName().equals("clan_tech_knowledge")) { //$NON-NLS-1$
+                            menuItem = new JMenuItem(String.format(resourceMap.getString("abilityDesc.format"), spa.getDisplayName(), costDesc)); //$NON-NLS-1$
+                            menuItem.setActionCommand(makeCommand(CMD_ACQUIRE_CLAN_TECH_SPEC, spa.getName(), String.valueOf(cost)));
+                            menuItem.addActionListener(this);
+                            menuItem.setEnabled(available);
+                            abMenu.add(menuItem);
                         } else {
                             menuItem = new JMenuItem(String.format(resourceMap.getString("abilityDesc.format"), spa.getDisplayName(), costDesc)); //$NON-NLS-1$
                             menuItem.setActionCommand(makeCommand(CMD_ACQUIRE_ABILITY, spa.getName(), String.valueOf(cost)));
