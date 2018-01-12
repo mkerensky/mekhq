@@ -41,6 +41,7 @@ import megamek.common.Tank;
 import megamek.common.TargetRoll;
 import megamek.common.TechAdvancement;
 import megamek.common.WeaponType;
+import megamek.common.options.PilotOptions;
 import mekhq.MekHQ;
 import mekhq.MekHqXmlSerializable;
 import mekhq.MekHqXmlUtil;
@@ -49,6 +50,7 @@ import mekhq.campaign.Campaign;
 import mekhq.campaign.parts.equipment.EquipmentPart;
 import mekhq.campaign.parts.equipment.MissingEquipmentPart;
 import mekhq.campaign.personnel.Person;
+import mekhq.campaign.personnel.PersonnelOptions;
 import mekhq.campaign.personnel.SkillType;
 import mekhq.campaign.unit.Unit;
 import mekhq.campaign.work.IAcquisitionWork;
@@ -898,6 +900,10 @@ public abstract class Part implements Serializable, MekHqXmlSerializable, IPartW
 		if(isClanTechBase() || (this instanceof MekLocation && this.getUnit() != null && this.getUnit().getEntity().isClan())) {
 			if (null != tech && !tech.isClanner()) {
 				mods.addModifier(2, "clan tech");
+				//If tech has the clan tech specialist SPA, remove the modifier
+				if (tech.getOptions().booleanOption(PersonnelOptions.SPA_CLAN_TECH_SPEC)) { 
+				    mods.addModifier(-2, "clan technical specialist");
+				}
 			}
 		}
 		String qualityName = getQualityName(quality, campaign.getCampaignOptions().reverseQualityNames());
