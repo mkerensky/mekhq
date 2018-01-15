@@ -1892,34 +1892,6 @@ public class PersonnelTableMouseAdapter extends MouseInputAdapter implements
                             abMenu.add(specialistMenu);
                         } else if (spa.getName().equals(OptionsConstants.GUNNERY_RANGE_MASTER)) { //$NON-NLS-1$
                             JMenu specialistMenu = new JMenu(resourceMap.getString("rangemaster.text")); //$NON-NLS-1$
-                            menuItem = new JMenuItem(String.format(resourceMap.getString("abilityDesc.format"), resourceMap.getString("rangemaster_med.text"), costDesc)); //$NON-NLS-1$ //$NON-NLS-2$
-                            menuItem.setActionCommand(makeCommand(CMD_ACQUIRE_RANGEMASTER, Crew.RANGEMASTER_MEDIUM, String.valueOf(cost)));
-                            menuItem.addActionListener(this);
-                            menuItem.setEnabled(available);
-                            specialistMenu.add(menuItem);
-                            menuItem = new JMenuItem(String.format(resourceMap.getString("abilityDesc.format"), resourceMap.getString("rangemaster_lng.text"), costDesc)); //$NON-NLS-1$ //$NON-NLS-2$
-                            menuItem.setActionCommand(makeCommand(CMD_ACQUIRE_RANGEMASTER, Crew.RANGEMASTER_LONG, String.valueOf(cost)));
-                            menuItem.addActionListener(this);
-                            menuItem.setEnabled(available);
-                            specialistMenu.add(menuItem);
-                            menuItem = new JMenuItem(String.format(resourceMap.getString("abilityDesc.format"), resourceMap.getString("rangemaster_xtm.text"), costDesc)); //$NON-NLS-1$ //$NON-NLS-2$
-                            menuItem.setActionCommand(makeCommand(CMD_ACQUIRE_RANGEMASTER, Crew.RANGEMASTER_EXTREME, String.valueOf(cost)));
-                            menuItem.addActionListener(this);
-                            menuItem.setEnabled(available);
-                            specialistMenu.add(menuItem);
-                            menuItem = new JMenuItem(String.format(resourceMap.getString("abilityDesc.format"), resourceMap.getString("rangemaster_los.text"), costDesc)); //$NON-NLS-1$ //$NON-NLS-2$
-                            menuItem.setActionCommand(makeCommand(CMD_ACQUIRE_RANGEMASTER, Crew.RANGEMASTER_LOS, String.valueOf(cost)));
-                            menuItem.addActionListener(this);
-                            menuItem.setEnabled(available);
-                            specialistMenu.add(menuItem);
-                            abMenu.add(specialistMenu);
-                        } else if (spa.getName().equals("clan_tech_knowledge")) { //$NON-NLS-1$
-                            menuItem = new JMenuItem(String.format(resourceMap.getString("abilityDesc.format"), spa.getDisplayName(), costDesc)); //$NON-NLS-1$
-                            menuItem.setActionCommand(makeCommand(CMD_ACQUIRE_CLAN_TECH_SPEC, spa.getName(), String.valueOf(cost)));
-                            menuItem.addActionListener(this);
-                            menuItem.setEnabled(available);
-                            abMenu.add(menuItem);
-                        } else {
                             List<Object> ranges = new ArrayList<>();
                             if (person.getOptions().getOption(OptionsConstants.GUNNERY_RANGE_MASTER).booleanValue()) {
                                 Object val = person.getOptions().getOption(OptionsConstants.GUNNERY_RANGE_MASTER).getValue();
